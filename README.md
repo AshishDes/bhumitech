@@ -1,36 +1,71 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# BhumiTech — Corporate Website
 
-## Getting Started
+A single-file, zero-build static website for **BhumiTech**, a New York–based IT consulting firm.
+Enterprise look-and-feel (royal blue), full navigation with mega-menus, and client-side page switching.
 
-First, run the development server:
-
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+```
+bhumitech/
+├── index.html      # the entire site (HTML + CSS + JS inline)
+├── vercel.json     # Vercel config (clean URLs + security headers)
+├── .gitignore
+└── README.md
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+No build step, no dependencies. Open `index.html` locally or deploy as-is.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Deploy: GitHub + Vercel (production + preview)
 
-## Learn More
+This gives you two environments automatically:
 
-To learn more about Next.js, take a look at the following resources:
+- **Production** → the `main` branch → your live domain
+- **Preview** → every other branch / Pull Request → a unique temporary URL for review
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### 1. Create the GitHub repo
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```bash
+cd bhumitech
+git init
+git add .
+git commit -m "Initial BhumiTech site"
+git branch -M main
+# create an EMPTY repo named "bhumitech" on github.com first, then:
+git remote add origin https://github.com/<your-username>/bhumitech.git
+git push -u origin main
+```
 
-## Deploy on Vercel
+### 2. Connect Vercel
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+1. Go to **vercel.com → Add New → Project → Import** your `bhumitech` repo.
+2. Framework preset: **Other** (it's static). Build command: *none*. Output dir: *leave default*.
+3. Click **Deploy**. `main` is now your **Production** environment.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Vercel auto-creates a Preview deployment for any branch or PR — no extra setup.
+
+### 3. The recurring-changes workflow
+
+```bash
+# start a change
+git checkout -b feature/hero-copy
+# ...edit index.html...
+git commit -am "Update hero copy"
+git push -u origin feature/hero-copy
+```
+
+Pushing the branch (or opening a PR) gives you a **Preview URL** to review.
+When it looks right, merge into `main` → Vercel ships it to **Production**.
+
+```bash
+git checkout main && git merge feature/hero-copy && git push   # → production
+```
+
+### Custom domain
+Vercel → Project → **Settings → Domains** → add `bhumitech.com` and follow the DNS steps.
+
+---
+
+## Notes for the next iteration
+- Search, the contact form, and "Apply" links are front-end placeholders. Wire the form to a CRM/inbox (e.g. Formspree, Resend, or a serverless function) when ready.
+- Replace the abstract gradient panels with real photography/illustration if desired.
+- All copy is original placeholder content — review before going live.
