@@ -135,6 +135,11 @@
   .card:hover .more{gap:10px}
   .card .topline{position:absolute;top:0;left:0;height:4px;width:0;background:linear-gradient(90deg,var(--blue),var(--cyan));transition:width .3s}
   .card:hover .topline{width:100%}
+  /* "What we do" cards: icon beside heading */
+  .cards-inline .card{display:flex;flex-wrap:wrap;align-items:center;gap:14px 16px}
+  .cards-inline .card .ico{margin-bottom:0;flex:0 0 auto}
+  .cards-inline .card h3{margin-bottom:0;flex:1}
+  .cards-inline .card p,.cards-inline .card .more{flex-basis:100%;width:100%;margin-bottom:0}
 
   .bg-surface{background:var(--surface)}
   .bg-navy{background:var(--navy);color:#fff}
@@ -388,7 +393,7 @@
         <h2>Capabilities that span strategy to operations</h2>
         <p>One partner across the full technology lifecycle — so transformation actually ships, scales, and stays secure.</p>
       </div>
-      <div class="grid g3">
+      <div class="grid g3 cards-inline">
         <div class="card reveal" data-route="services"><div class="topline"></div><div class="ico">☁</div><h3>Cloud & Infrastructure</h3><p>Migrate and modernize on AWS, Azure, and GCP with cost discipline and resilience built in.</p><span class="more">Learn more →</span></div>
         <div class="card reveal" data-route="services"><div class="topline"></div><div class="ico">⚙</div><h3>Application Engineering</h3><p>Design and build custom software and modernize legacy estates into cloud-native platforms.</p><span class="more">Learn more →</span></div>
         <div class="card reveal" data-route="services"><div class="topline"></div><div class="ico">◈</div><h3>Data & AI</h3><p>Turn data into decisions with analytics, ML, and responsibly deployed generative AI.</p><span class="more">Learn more →</span></div>
@@ -408,12 +413,12 @@
         <p>We pair engineering rigor with the regulatory and operational realities of your industry.</p>
       </div>
       <div class="grid g3">
-        <div class="ind reveal" data-route="industries"><div class="ind-bg" style="background:linear-gradient(135deg,#0b2f6e,#0047cc)"></div><div class="ov"></div><div class="ind-content"><h3>Banking & Financial Services</h3><p>Core modernization, payments, and real-time risk.</p></div></div>
-        <div class="ind reveal" data-route="industries"><div class="ind-bg" style="background:linear-gradient(135deg,#0a2150,#2D8CFF)"></div><div class="ov"></div><div class="ind-content"><h3>Healthcare & Life Sciences</h3><p>Interoperability and HIPAA-grade engineering.</p></div></div>
-        <div class="ind reveal" data-route="industries"><div class="ind-bg" style="background:linear-gradient(135deg,#08183a,#0a73c2)"></div><div class="ov"></div><div class="ind-content"><h3>Retail & Consumer</h3><p>Commerce, supply chain, and personalization.</p></div></div>
-        <div class="ind reveal" data-route="industries"><div class="ind-bg" style="background:linear-gradient(135deg,#0b2f6e,#00a3cc)"></div><div class="ov"></div><div class="ind-content"><h3>Manufacturing</h3><p>Industry 4.0, IoT, and connected operations.</p></div></div>
-        <div class="ind reveal" data-route="industries"><div class="ind-bg" style="background:linear-gradient(135deg,#0a2150,#2D8CFF)"></div><div class="ov"></div><div class="ind-content"><h3>Technology & Media</h3><p>Platform scale, SaaS, and developer experience.</p></div></div>
-        <div class="ind reveal" data-route="industries"><div class="ind-bg" style="background:linear-gradient(135deg,#08183a,#0047cc)"></div><div class="ov"></div><div class="ind-content"><h3>Public Sector</h3><p>Citizen services and legacy modernization.</p></div></div>
+        <div class="ind reveal" data-route="industries"><div class="ind-bg" style="background:#0a1f44 url('https://images.unsplash.com/photo-1554224155-6726b3ff858f?auto=format&fit=crop&w=1000&q=70') center/cover"></div><div class="ov"></div><div class="ind-content"><h3>Banking & Financial Services</h3><p>Core modernization, payments, and real-time risk.</p></div></div>
+        <div class="ind reveal" data-route="industries"><div class="ind-bg" style="background:#0a1f44 url('https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&w=1000&q=70') center/cover"></div><div class="ov"></div><div class="ind-content"><h3>Healthcare & Life Sciences</h3><p>Interoperability and HIPAA-grade engineering.</p></div></div>
+        <div class="ind reveal" data-route="industries"><div class="ind-bg" style="background:#0a1f44 url('https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=1000&q=70') center/cover"></div><div class="ov"></div><div class="ind-content"><h3>Retail & Consumer</h3><p>Commerce, supply chain, and personalization.</p></div></div>
+        <div class="ind reveal" data-route="industries"><div class="ind-bg" style="background:#0a1f44 url('https://images.unsplash.com/photo-1565793298595-6a879b1d9492?auto=format&fit=crop&w=1000&q=70') center/cover"></div><div class="ov"></div><div class="ind-content"><h3>Manufacturing</h3><p>Industry 4.0, IoT, and connected operations.</p></div></div>
+        <div class="ind reveal" data-route="industries"><div class="ind-bg" style="background:#0a1f44 url('https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1000&q=70') center/cover"></div><div class="ov"></div><div class="ind-content"><h3>Technology & Media</h3><p>Platform scale, SaaS, and developer experience.</p></div></div>
+        <div class="ind reveal" data-route="industries"><div class="ind-bg" style="background:#0a1f44 url('https://images.unsplash.com/photo-1529107386315-e1a2ed48a620?auto=format&fit=crop&w=1000&q=70') center/cover"></div><div class="ov"></div><div class="ind-content"><h3>Public Sector</h3><p>Citizen services and legacy modernization.</p></div></div>
       </div>
     </div>
   </section>
