@@ -54,13 +54,6 @@
   .pad{padding:96px 0}
   .pad-sm{padding:64px 0}
 
-  /* ===== Utility top bar ===== */
-  .topbar{background:var(--navy);color:#c9d6ea;font-size:13px}
-  .topbar .wrap{display:flex;justify-content:space-between;align-items:center;height:40px}
-  .topbar a{color:#c9d6ea;transition:.15s}
-  .topbar a:hover{color:#fff}
-  .topbar .tb-right{display:flex;gap:22px;align-items:center}
-  .topbar .tb-left{display:flex;gap:8px;align-items:center}
   .dot{width:6px;height:6px;border-radius:50%;background:var(--cyan);display:inline-block}
 
   /* ===== Header / nav ===== */
@@ -264,7 +257,7 @@
     footer .fgrid{grid-template-columns:1fr 1fr;gap:30px}
   }
   @media(max-width:760px){
-    .nav-links,.nav-actions .btn,.topbar .tb-left{display:none}
+    .nav-links,.nav-actions .btn{display:none}
     .burger{display:flex}
     .pad{padding:64px 0}
     .g3,.g2,.g4{grid-template-columns:1fr}
@@ -282,18 +275,6 @@
 </head>
 <body>
 
-<!-- ===== TOP UTILITY BAR ===== -->
-<div class="topbar">
-  <div class="wrap">
-    <div class="tb-left"></div>
-    <div class="tb-right">
-      <a data-route="insights">Insights</a>
-      <a data-route="careers">Careers</a>
-      <a data-route="contact">Investor Relations</a>
-      <a data-route="contact">Global · EN</a>
-    </div>
-  </div>
-</div>
 
 <!-- ===== HEADER ===== -->
 <header>
