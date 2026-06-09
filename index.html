@@ -101,12 +101,10 @@
   .hero-stats{display:flex;gap:36px;margin-top:54px;flex-wrap:wrap}
   .hero-stats .num{font-family:'Sora';font-size:36px;font-weight:700;color:#fff}
   .hero-stats .lbl{font-size:13.5px;color:#a9bcdc}
-  .hero-card{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14);border-radius:18px;padding:28px;backdrop-filter:blur(6px)}
-  .hero-card h4{font-size:18px;margin-bottom:18px;color:#fff}
-  .hero-card .row{display:flex;justify-content:space-between;align-items:center;padding:13px 0;border-bottom:1px solid rgba(255,255,255,.1);font-size:14px;color:#cdd9ef}
-  .hero-card .row:last-child{border-bottom:0}
-  .hero-card .row b{color:#fff;font-family:'Sora'}
-  .hero-card .pill{font-size:11px;font-weight:700;color:#071a3d;background:var(--cyan);padding:3px 10px;border-radius:20px}
+  .hero-visual{position:relative;min-height:380px;border-radius:18px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.14);overflow:hidden;backdrop-filter:blur(6px)}
+  .hero-visual canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+  .hero-visual .hv-cap{position:absolute;left:22px;bottom:18px;display:flex;align-items:center;gap:9px;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#9fc7ff;z-index:2}
+  .hero-visual .hv-dot{width:8px;height:8px;border-radius:50%;background:var(--cyan);box-shadow:0 0 0 4px rgba(0,194,255,.18)}
 
   /* ===== Trust strip ===== */
   .trust{border-bottom:1px solid var(--line);background:#fff}
@@ -255,7 +253,7 @@
   /* responsive */
   @media(max-width:980px){
     .hero .wrap{grid-template-columns:1fr;gap:36px}
-    .hero-card{display:none}
+    .hero-visual{display:none}
     .g3,.g4{grid-template-columns:1fr 1fr}
     .feature-row{grid-template-columns:1fr;gap:26px}
     .contact-grid{grid-template-columns:1fr}
@@ -365,12 +363,9 @@
           <div><div class="num" data-count="98" data-suffix="%">0</div><div class="lbl">Client retention</div></div>
         </div>
       </div>
-      <div class="hero-card">
-        <h4>Engagement snapshot</h4>
-        <div class="row"><span>Cloud migration · global bank</span><b>-38% run cost</b></div>
-        <div class="row"><span>AI claims automation · insurer</span><b>5× faster</b></div>
-        <div class="row"><span>Zero-trust rollout · health system</span><b>SOC 2 ready</b></div>
-        <div class="row"><span>Status</span><span class="pill">Delivering 24/7</span></div>
+      <div class="hero-visual">
+        <canvas id="aiCanvas"></canvas>
+        <div class="hv-cap"><span class="hv-dot"></span>Data &amp; AI in motion</div>
       </div>
     </div>
   </section>
@@ -801,9 +796,63 @@ function networkCanvas(id,opts={}){
   window.addEventListener('resize',()=>{size();init();if(reduce)draw();});
 }
 
+/* ---------- Hero "Data & AI" neural-network animation ---------- */
+function aiNetwork(id){
+  const c=document.getElementById(id); if(!c) return;
+  const ctx=c.getContext('2d');
+  const reduce=window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+  const layers=[4,6,6,3];
+  let w,h,nodes=[],edges=[],pulses=[],t=0;
+  function build(){
+    nodes=[];edges=[];pulses=[];
+    const padX=w*0.14, padY=h*0.12, uw=w-2*padX, uh=h-2*padY;
+    layers.forEach((cnt,li)=>{
+      const x=padX+(layers.length===1?0:uw*li/(layers.length-1));
+      for(let i=0;i<cnt;i++){
+        const y=padY+(cnt===1?uh/2:uh*i/(cnt-1));
+        nodes.push({x,y,layer:li,phase:Math.random()*6.28});
+      }
+    });
+    for(let li=0;li<layers.length-1;li++){
+      const a=nodes.filter(n=>n.layer===li), b=nodes.filter(n=>n.layer===li+1);
+      a.forEach(na=>b.forEach(nb=>edges.push({a:na,b:nb})));
+    }
+  }
+  function size(){const r=c.getBoundingClientRect();w=r.width;h=r.height;c.width=w*devicePixelRatio;c.height=h*devicePixelRatio;ctx.setTransform(devicePixelRatio,0,0,devicePixelRatio,0,0);build();}
+  function spawn(){ if(edges.length)pulses.push({e:edges[(Math.random()*edges.length)|0],p:0,sp:0.010+Math.random()*0.018}); }
+  function draw(){
+    ctx.clearRect(0,0,w,h);
+    edges.forEach(e=>{ctx.strokeStyle='rgba(125,170,255,0.10)';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(e.a.x,e.a.y);ctx.lineTo(e.b.x,e.b.y);ctx.stroke();});
+    if(!reduce){
+      for(let i=pulses.length-1;i>=0;i--){const pu=pulses[i];pu.p+=pu.sp;
+        if(pu.p>=1){pulses.splice(i,1);continue;}
+        const x=pu.e.a.x+(pu.e.b.x-pu.e.a.x)*pu.p, y=pu.e.a.y+(pu.e.b.y-pu.e.a.y)*pu.p;
+        const g=ctx.createRadialGradient(x,y,0,x,y,7);
+        g.addColorStop(0,'rgba(0,194,255,0.95)');g.addColorStop(1,'rgba(0,194,255,0)');
+        ctx.fillStyle=g;ctx.beginPath();ctx.arc(x,y,7,0,7);ctx.fill();
+      }
+    }
+    nodes.forEach(n=>{
+      const pulse=reduce?0.6:0.5+0.5*Math.sin(t*0.05+n.phase);
+      const glow=3.2*(1.3+pulse);
+      const g=ctx.createRadialGradient(n.x,n.y,0,n.x,n.y,glow);
+      g.addColorStop(0,'rgba(45,140,255,'+(0.45+pulse*0.4)+')');g.addColorStop(1,'rgba(45,140,255,0)');
+      ctx.fillStyle=g;ctx.beginPath();ctx.arc(n.x,n.y,glow,0,7);ctx.fill();
+      ctx.fillStyle='rgba(224,242,255,0.95)';ctx.beginPath();ctx.arc(n.x,n.y,2.6,0,7);ctx.fill();
+    });
+    t++;
+    if(!reduce){ if(t%13===0) spawn(); requestAnimationFrame(draw); }
+  }
+  size();
+  if(!reduce){for(let k=0;k<7;k++)spawn();}
+  draw();
+  window.addEventListener('resize',()=>{size();if(reduce)draw();});
+}
+
 window.addEventListener('load',()=>{
   countUp();
   networkCanvas('gridCanvas');
+  aiNetwork('aiCanvas');
   networkCanvas('svcCanvas',{count:30,color:'255,255,255',max:110});
   networkCanvas('aboutCanvas',{count:30,color:'255,255,255',max:110});
 });
