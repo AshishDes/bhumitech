@@ -101,7 +101,9 @@
   .hero-stats{display:flex;gap:36px;margin-top:54px;flex-wrap:wrap}
   .hero-stats .num{font-family:'Sora';font-size:36px;font-weight:700;color:#fff}
   .hero-stats .lbl{font-size:13.5px;color:#a9bcdc}
-  .hero-visual{position:relative;min-height:380px;border-radius:18px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.14);overflow:hidden;backdrop-filter:blur(6px)}
+  .hero-visual{position:absolute;top:0;right:0;bottom:0;width:54%;z-index:1;pointer-events:none;opacity:.9;
+    -webkit-mask-image:radial-gradient(115% 130% at 78% 50%,#000 42%,transparent 78%);
+            mask-image:radial-gradient(115% 130% at 78% 50%,#000 42%,transparent 78%)}
   .hero-visual canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
 
   /* ===== Trust strip ===== */
@@ -345,6 +347,7 @@
   <section class="hero">
     <canvas class="grid-canvas" id="gridCanvas"></canvas>
     <div class="glow"></div>
+    <div class="hero-visual"><canvas id="aiCanvas"></canvas></div>
     <div class="wrap">
       <div>
         <span class="eyebrow light">IT Consulting · Digital Engineering · New York</span>
@@ -360,9 +363,6 @@
           <div><div class="num" data-count="40" data-suffix="+">0</div><div class="lbl">Industries served</div></div>
           <div><div class="num" data-count="98" data-suffix="%">0</div><div class="lbl">Client retention</div></div>
         </div>
-      </div>
-      <div class="hero-visual">
-        <canvas id="aiCanvas"></canvas>
       </div>
     </div>
   </section>
